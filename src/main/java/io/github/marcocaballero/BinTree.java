@@ -40,7 +40,7 @@ public class BinTree {
 	}
 
 	public boolean isLeaf() {
-		return !isEmpty() && (head.getLeftChild().isEmpty() && head.getRightChild().isEmpty());
+		return !isEmpty() && (head.getLeftChild() == null && head.getRightChild() == null);
 	}
 
 	@Override

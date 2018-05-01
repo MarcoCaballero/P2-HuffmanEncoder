@@ -5,13 +5,7 @@ import java.io.IOException;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
-		String result = new HuffmanEncoder().encode("char");
-		
-		
-		
-		System.out.println("Result tree: " + result);
-
+		System.out.println("Result: " + new HuffmanEncoder().encode("char"));
 	}
 
 }

@@ -23,6 +23,14 @@ public class Node {
 		this(0, value);
 	}
 
+	public boolean hasLeftChild() {
+		return this.leftChild != null;
+	}
+
+	public boolean hasRightChild() {
+		return this.rightChild != null;
+	}
+
 	public BinTree getLeftChild() {
 		return leftChild;
 	}
