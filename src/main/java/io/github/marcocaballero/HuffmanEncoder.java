@@ -23,15 +23,19 @@ public class HuffmanEncoder {
 	private ArrayList<BinTree> trees;
 	private Map<Character, String> huffmanCodes;
 	private InputStream input;
+	private boolean allowSpecialChars;
+
+	public HuffmanEncoder(boolean allowSpecialChars) {
+		trees = new ArrayList<BinTree>();
+		this.allowSpecialChars = allowSpecialChars;
+	}
 
 	public HuffmanEncoder() {
-		trees = new ArrayList<BinTree>();
+		this(false);
 	}
 
 	public String encode(String fileName) throws IOException {
-		input = getClass().getClassLoader().getResourceAsStream(fileName);
-		generateTrees();
-		// generateTrees(true); // encode special characters
+		generateTrees(fileName);
 		fillHuffmanCodes(trees.get(0), "");
 		return generateTranslation();
 	}
@@ -85,25 +89,26 @@ public class HuffmanEncoder {
 		trees.remove(0);
 	}
 
-	private void generateTrees() throws IOException {
-		generateTrees(false);
-	}
-
-	private void generateTrees(boolean permit) throws IOException {
+	private void generateTrees(String fileName) throws IOException {
+		input = getClass().getClassLoader().getResourceAsStream(fileName);
 		input.mark(0);
 		BufferedReader br = new BufferedReader(new InputStreamReader(input));
 		huffmanCodes = new HashMap<Character, String>();
+		System.out.println("Received file to compress: ");
+		System.out.println("File name: '" + fileName + "' \n");
 		int c;
 		while ((c = br.read()) != -1) {
 			char ch = (char) c;
+			System.out.print(ch);
 			if (huffmanCodes.containsKey(ch)) {
 				updateFrequency(ch);
-			} else if (!BAD_SYMBOLS.contains(c) || permit) {
+			} else if (!BAD_SYMBOLS.contains(c) || allowSpecialChars) {
 				huffmanCodes.put(ch, "");
 				trees.add(new BinTree(1, ch));
 			}
 		}
 
+		System.out.println("\n");
 		sortTreesList();
 		generateEncodeTree();
 	}
